@@ -1,0 +1,164 @@
+@API_HostAddress = https://localhost:{{port}}
+@port=7203
+@acceptType=application/json
+@contentType=application/json
+@accessToken=Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiI1ZmU2MmMwOS0xYWY5LTRmNGEtYjYwOS04NDdhZDY0YzY5NjMiLCJlbWFpbCI6Ik1vaGFtZWRIZXNoYW1AZ21haWwuY29tIiwidW5pcXVlX25hbWUiOiJNb2hhbWVkSGVzaGFtQGdtYWlsLmNvbSIsIm5iZiI6MTc3MjA2MTA5MSwiZXhwIjoxNzcyMDYxOTkxLCJpYXQiOjE3NzIwNjEwOTEsImlzcyI6IlBvbGxzQVBJIiwiYXVkIjoiUG9sbHNBcGlVc2VycyJ9.GH9hUPxqLza8XFVwGDNAgWXQkaYodgfpqsKv4MsgY2g
+
+### Get polls (Success)
+GET {{API_HostAddress}}/api/poll
+Accept: application/json
+
+### Get my polls (Success)
+GET {{API_HostAddress}}/api/poll/GetMyPolls
+Authorization :{{accessToken}}
+
+### Get poll details (Success)
+
+GET {{API_HostAddress}}/api/poll/1
+Accept :{{acceptType}}
+
+### Get poll details (Faild wrong Id)
+GET {{API_HostAddress}}/api/poll/10
+Accept :{{acceptType}}
+
+### Vote on poll (Faild Not logged in)
+POST {{API_HostAddress}}/api/poll/Vote
+Content-Type:{{contentType}}
+
+{
+  "pollId":2,
+  "optionId":1
+}
+
+### Create poll (success)
+POST {{API_HostAddress}}/api/poll/create
+Content-Type:{{contentType}}
+Authorization :{{accessToken}}
+
+{
+ 
+  "question": "The best Framework in 2026",
+  "options": [
+    "Asp.Net core",
+    "Laravel",
+    "Spring Boot"  
+  ]
+}
+
+
+### Vote (Faild Can not Vote your poll)
+POST {{API_HostAddress}}/api/poll/Vote
+Content-Type:{{contentType}}
+Authorization:{{accessToken}}
+
+{
+  "pollId":2,
+  "optionId":1
+}
+
+### Vote (Faild wrong option Id)
+POST {{API_HostAddress}}/api/poll/Vote
+Content-Type:{{contentType}}
+Authorization:{{accessToken}}
+
+{
+  "pollId":2,
+  "optionId":1
+}
+### Vote (Success)
+POST {{API_HostAddress}}/api/poll/Vote
+Content-Type:{{contentType}}
+Authorization:{{accessToken}}
+
+{
+  "pollId":2,
+  "optionId":4
+}
+### Vote (Faild you already Voted this poll)
+POST {{API_HostAddress}}/api/poll/Vote
+Content-Type:{{contentType}}
+Authorization:{{accessToken}}
+
+{
+  "pollId":2,
+  "optionId":4
+}
+### DeactivatePoll (if userid from access token not the owner of poll 403 Forbidden)
+POST {{API_HostAddress}}/api/poll/DeactivatePoll
+Content-Type:{{contentType}}
+Authorization:{{accessToken}}
+
+{
+  "pollId":2
+}
+
+### Login (succes)
+POST {{API_HostAddress}}/api/Auth/login
+Content-Type:{{contentType}}
+
+{
+  "email": "MohamedHesham@gmail.com",
+  "password": "Mohamed@1234"
+}
+
+### Login (Faild invalid email or password)
+POST {{API_HostAddress}}/api/Auth/login
+Content-Type:{{contentType}}
+
+{
+  "email": "MohamedHesham@gmail.com",
+  "password": "Mohamed@12345"
+
+}
+### Regester (Faild email existing)
+POST {{API_HostAddress}}/api/Auth/register
+Content-Type:{{contentType}}
+
+{
+  "firstname":"Mohamed",
+  "lastname":"Hesham",
+  "email": "MohamedHesham@gmail.com",
+  "password": "Mohamed@12345",
+  "confirmpassword": "Mohamed@12345"
+
+}
+### Register (Faild data vlidation)
+POST {{API_HostAddress}}/api/Auth/register
+Content-Type:{{contentType}}
+
+{
+
+  "lastname":"Hesham",
+  "email": "MohamedHesham@gmail.com",
+  "password": "Mohamed@12345",
+  "confirmpassword": "Mohamed@12345"
+
+}
+### Regester (Success)
+POST {{API_HostAddress}}/api/Auth/register
+Content-Type:{{contentType}}
+
+{
+  "firstname":"Tarek",
+  "lastname":"Hesham",
+  "email": "TarekHesham@gmail.com",
+  "password": "TarekHesham$2051@___,km",
+  "confirmpassword":"TarekHesham$2051@___,km"
+
+}
+### Refresh-token (success)
+POST {{API_HostAddress}}/api/Auth/refresh-token
+Content-Type:{{contentType}}
+Accept :{{acceptType}}
+
+{
+  "refreshToken":"ggaURGgr26MWllsT43wbvb7jKqjSeO/4+Axvq0nnMMQgcLpVRguwPeSQqA/umfrUEPPjVVJ2m9rHWjyn9zZDHg=="
+}
+### RevokeToken  (success)
+POST {{API_HostAddress}}/api/Auth/revoke-token
+Content-Type:{{contentType}}
+Authorization :{{accessToken}}
+
+{
+  "refreshToken":"YdNFdqJ7yklPhZFyuoW31vAd2N/nG1tzVzFRTi0XOli9TpE3ZlOWg2ufhaLuTjjXVX7rVATaD+ilXdCC775MMg=="
+}
